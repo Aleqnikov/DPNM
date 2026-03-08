@@ -9,20 +9,15 @@
 * конфигурацию модели.
 */
 
-const double g_0 = 9.80665;      // м/с^2
-
-const double R = 40000;               // км
-
-
 
 struct Stage
 {
     double weight;                  // Вес самой ступени
     double field_weight;            // Вес топлива, что расходуется по мере
                                     // полета ракеты.
-    double fuel_сonsumption;        // Расход топлива ракетой Литр/c
 
-    double Power;                   // Мощьность выдаваемая двигетелем.
+    double I_sp;                    // Удельный импульс
+    double T_max;                   // Тяга
 
     double getFullWeight()
     {
@@ -42,6 +37,15 @@ struct Rocket
     double dx_dt, dy_dt;            // Текущие составляющие вектора скорости ракеты
     Stage stage1, stage2;
 
+    int current_stage = 1;
+
+    Stage getCurrStage()
+    {
+        if(current_stage == 0)
+            return stage1;
+        return stage2;
+    }
+
 
     double getWeight()
     {
@@ -53,8 +57,7 @@ struct Rocket
     {
         return std::sqrt(std::pow(dx_dt, 2) + std::pow(dy_dt, 2));
     }
-
-}
+};
 
 
 
